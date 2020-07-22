@@ -92,8 +92,7 @@ describe('Promisification', function() {
             expect(line).to.contain('lol');
           });
           done();
-        })
-        .catch(done);
+        }).catch(done);
     });
 
     it('should make any errors available in the `catch` block', function(done) {
