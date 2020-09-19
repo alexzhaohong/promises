@@ -12,14 +12,14 @@ describe('Advanced chaining', function() {
   describe('searchCommonConceptsFromGitHubProfiles', function() {
     var searchCommonConceptsFromGitHubProfiles = chaining.searchCommonConceptsFromGitHubProfiles;
 
-    it('should return a promise', function() {
+    xit('should return a promise', function() {
       // Must return a Bluebird promise. ES6 promise won't work here
       expect(searchCommonConceptsFromGitHubProfiles(['danthareja'])).to.be.an.instanceOf(Promise);
     });
 
-    it('should resolve to an array of tags', function(done) {
+    xit('should resolve to an array of tags', function(done) {
       this.timeout(5000);
-      searchCommonConceptsFromGitHubProfiles(['danthareja'])
+      searchCommonConceptsFromGitHubProfiles(['alexzhaohong'])
         .then(function(tags) {
           expect(tags).to.be.an.instanceOf(Array);
           done();
@@ -27,7 +27,7 @@ describe('Advanced chaining', function() {
         .catch(done);
     });
 
-    xit('should not have duplicate adjectives in the array of tags', function(done) {
+    it('should not have duplicate adjectives in the array of tags', function(done) {
       this.timeout(5000);
       searchCommonConceptsFromGitHubProfiles(['danthareja', 'beth'])
         .then(function(tags) {
@@ -44,12 +44,12 @@ describe('Advanced chaining', function() {
         .catch(done);
     });
 
-    xit('should contain the correct tags', function(done) {
+    it('should contain the correct tags', function(done) {
       this.timeout(5000);
       searchCommonConceptsFromGitHubProfiles(['danthareja', 'sunny-g'])
         .then(function(tags) {
           expect(tags).to.satisfy(tags => {
-            return tags.includes("men") || tags.includes("man");
+            return tags.includes('men') || tags.includes('man');
           });
           done();
         })

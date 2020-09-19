@@ -30,14 +30,13 @@ var searchCommonConceptsFromGitHubProfiles = function (githubHandles) {
       return profileArr.map(profile=>profile.avatarUrl);
     })
     .then(avatarArr => {
-      console.log(avatarArr);
+      // console.log(avatarArr);
       return Promise.all(avatarArr.map(avatar=>lib.predictImage(avatar)));
     })
     .then(conceptArr => {
-      console.log('LOOK HERE!!!');
-      console.log(conceptArr.data);
-      return conceptArr.data[0].tags;
-      // return lib.getIntersection(conceptArr);
+      // console.log('LOOK HERE!!!');
+      // console.log('tags: ', conceptArr);
+      return lib.getIntersection(conceptArr);
     })
     .catch(console.log.bind(console));
 };
@@ -46,3 +45,4 @@ var searchCommonConceptsFromGitHubProfiles = function (githubHandles) {
 module.exports = {
   searchCommonConceptsFromGitHubProfiles,
 };
+
