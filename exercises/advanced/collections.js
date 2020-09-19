@@ -12,14 +12,27 @@ var fs = require('fs');
 const promiseConstructor = require('../bare_minimum/promiseConstructor');
 Promise.promisifyAll(fs);
 
+// var combineFirstLineOfManyFiles = function(filePaths, writePath) {
+//   var pluck = promiseConstructor.pluckFirstLineFromFileAsync;
+
+//   return Promise.all([
+//     pluck(filePaths[0]),
+//     pluck(filePaths[1]),
+//     pluck(filePaths[2]),
+//   ])
+//     .then((resolved) => {
+//       return fs.writeFileAsync(writePath, resolved.join('\n'), 'utf8');
+//     })
+//     .catch(console.log.bind(console));
+// };
+
+
 var combineFirstLineOfManyFiles = function(filePaths, writePath) {
   var pluck = promiseConstructor.pluckFirstLineFromFileAsync;
-
-  return Promise.all([
-    pluck(filePaths[0]),
-    pluck(filePaths[1]),
-    pluck(filePaths[2]),
-  ])
+  let arr = filePaths.map(path => {
+    return pluck(path);
+  });
+  return Promise.all(arr)
     .then((resolved) => {
       return fs.writeFileAsync(writePath, resolved.join('\n'), 'utf8');
     })
