@@ -3,19 +3,33 @@ var Promise = require('bluebird');
 
 /**
  * Return a function that wraps `nodeStyleFn`. When the returned function is invoked,
- * it will return a promise which will be resolved or rejected, depending on 
+ * it will return a promise which will be resolved or rejected, depending on
  * the execution of the now-wrapped `nodeStyleFn`
  *
  * In other words:
  *   - If `nodeStyleFn` succeeds, the promise should be resolved with its results
  *   - If nodeStyleFn fails, the promise should be rejected with the error
  *
- * Because the returned function returns a promise, it does and should not
+ * Because the returned function returns a promise, it does not and should not
  * expect a callback function as one of its arguments
  */
 
 var promisify = function(nodeStyleFn) {
- // TODO
+  return (...args) => {
+    // console.log(args);
+    return new Promise(function (resolve, reject) {
+      customCallback = (err, ...results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results.length === 1 ? results[0] : results);
+        }
+      };
+      args.push(customCallback);
+      // console.log(args);
+      nodeStyleFn.call(this, ...args);
+    });
+  };
 };
 
 
