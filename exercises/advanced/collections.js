@@ -15,17 +15,18 @@ Promise.promisifyAll(fs);
 var combineFirstLineOfManyFiles = function(filePaths, writePath) {
   var pluck = promiseConstructor.pluckFirstLineFromFileAsync;
 
-  Promise.all([
+  return Promise.all([
     pluck(filePaths[0]),
     pluck(filePaths[1]),
     pluck(filePaths[2]),
   ])
     .then((resolved) => {
-      console.log(resolved);
-      console.log(JSON.stringify(resolved, null, 2));
-      console.log(resolved.join('\n'));
-      console.log(fs.writeFileAsync(writePath, 'test', 'utf8'));
-      return Promise.fs.writeFile(writePath, 'test', 'utf8');
+      // console.log(resolved);
+      // console.log(JSON.stringify(resolved, null, 2));
+      resolved = resolved.join('\n');
+      // console.log(resolved);
+      // console.log(fs.writeFileAsync(writePath, 'test', 'utf8'));
+      return fs.writeFileAsync(writePath, resolved, 'utf8');
     })
     .catch(console.log.bind(console));
 };
