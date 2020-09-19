@@ -21,12 +21,7 @@ var combineFirstLineOfManyFiles = function(filePaths, writePath) {
     pluck(filePaths[2]),
   ])
     .then((resolved) => {
-      // console.log(resolved);
-      // console.log(JSON.stringify(resolved, null, 2));
-      resolved = resolved.join('\n');
-      // console.log(resolved);
-      // console.log(fs.writeFileAsync(writePath, 'test', 'utf8'));
-      return fs.writeFileAsync(writePath, resolved, 'utf8');
+      return fs.writeFileAsync(writePath, resolved.join('\n'), 'utf8');
     })
     .catch(console.log.bind(console));
 };
@@ -35,3 +30,8 @@ var combineFirstLineOfManyFiles = function(filePaths, writePath) {
 module.exports = {
   combineFirstLineOfManyFiles: combineFirstLineOfManyFiles
 };
+
+// console.log(resolved);
+// console.log(JSON.stringify(resolved, null, 2));
+// console.log(resolved);
+// console.log(fs.writeFileAsync(writePath, 'test', 'utf8'));
