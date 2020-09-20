@@ -45,8 +45,47 @@ var promisify = function(nodeStyleFn) {
  */
 
 var all = function(arrayOfPromises) {
-  // TODO
+  let resultArr = [];
+  let completedPromises = 0;
+
+  return new Promise(function (resolve, reject) {
+    arrayOfPromises.forEach((promise, index) => {
+      promise
+        .then(value => {
+          resultArr[index] = value;
+          completedPromises += 1;
+          if (completedPromises === arrayOfPromises.length) {
+            resolve(resultArr);
+          }
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  });
 };
+
+// var all = function(arrayOfPromises) {
+//   let resultArr = [];
+
+//   let merged = arrayOfPromises.reduce(
+//     (accumulator, promise) => {
+//       return accumulator
+//         .then(() => {
+//           return promise;
+//         })
+//         .then((result) => {
+//           return resultArr.push(result);
+//         });
+//     },
+//     Promise.resolve(null)
+//   );
+
+//   return merged
+//     .then(() => {
+//       return resultArr;
+//     });
+// };
 
 
 /**
@@ -56,7 +95,13 @@ var all = function(arrayOfPromises) {
  */
 
 var race = function(arrayOfPromises) {
-  // TODO
+  return new Promise(function (resolve, reject) {
+    arrayOfPromises.forEach(promise =>
+      promise
+        .then(resolve)
+        .catch(reject)
+    );
+  });
 };
 
 // Export these functions so we can unit test them
